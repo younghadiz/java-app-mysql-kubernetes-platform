@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: java-app-config
+  namespace: java-mysql
+  labels:
+    app.kubernetes.io/name: java-app
+    app.kubernetes.io/component: configuration
+    app.kubernetes.io/part-of: java-mysql-platform
+data:
+  DB_SERVER: mysql-primary.java-mysql.svc.cluster.local
+  DB_PORT: "3306"
+  DB_NAME: java_app_db

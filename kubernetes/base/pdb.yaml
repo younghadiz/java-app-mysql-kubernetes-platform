@@ -1,0 +1,15 @@
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: java-app
+  namespace: java-mysql
+  labels:
+    app.kubernetes.io/name: java-app
+    app.kubernetes.io/part-of: java-mysql-platform
+spec:
+  minAvailable: 1
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: java-app 
