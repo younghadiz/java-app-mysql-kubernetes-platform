@@ -55,3 +55,4 @@ reports/
 
 # Local Minikube state must never be committed
 .minikube/
+.tmp/

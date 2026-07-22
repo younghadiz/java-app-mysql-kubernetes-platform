@@ -28,27 +28,34 @@ LABEL org.opencontainers.image.description="Spring Boot Java application deploye
 LABEL org.opencontainers.image.source="https://github.com/younghadiz/java-app-mysql-kubernetes-platform"
 LABEL org.opencontainers.image.licenses="MIT"
 
-# Create a dedicated non-root Linux user and application directory.
-RUN groupadd --system appgroup \
+ARG APP_UID=999
+ARG APP_GID=999
+
+# Create a dedicated non-root Linux group, user, and application directory.
+RUN groupadd \
+        --system \
+        --gid "${APP_GID}" \
+        appgroup \
     && useradd \
         --system \
-        --gid appgroup \
+        --uid "${APP_UID}" \
+        --gid "${APP_GID}" \
         --home-dir /opt/app \
         --shell /usr/sbin/nologin \
         appuser \
     && mkdir -p /opt/app \
-    && chown -R appuser:appgroup /opt/app
+    && chown -R "${APP_UID}:${APP_GID}" /opt/app
 
 WORKDIR /opt/app
 
 # Copy only the compiled JAR from the builder stage.
 COPY --from=builder \
-    --chown=appuser:appgroup \
+    --chown=999:999 \
     /workspace/build/libs/*.jar \
     /opt/app/application.jar
 
-# Run the application as an unprivileged user.
-USER appuser
+# Run the application using an explicit numeric non-root UID and GID.
+USER 999:999
 
 EXPOSE 8080
 
