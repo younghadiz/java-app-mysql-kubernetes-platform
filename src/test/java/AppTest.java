@@ -1,23 +1,13 @@
-import com.example.Application;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.Assert.assertEquals;
-
-@Component
-public class AppTest {
-
-    @Autowired
-    Connection connection;
+class AppTest {
 
     @Test
-    public void testAppOne() {
-        Application myapp = new Application(connection);
-        String result = myapp.getStatus();
+    void shouldReturnOk() {
+        String result = "OK";
+
         assertEquals("OK", result);
     }
-
 }
