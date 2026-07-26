@@ -1,0 +1,35 @@
+---
+replicaCount: 2
+
+image:
+  repository: docker.io/YOUR_DOCKERHUB_USERNAME/java-mysql-app
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: dockerhub-registry
+
+config:
+  databaseHost: mysql-primary.java-mysql.svc.cluster.local
+  databaseName: java_app_db
+
+secret:
+  create: true
+  databaseUsername: java_app_user
+  databasePassword: replace-locally
+
+existingSecret: ""
+
+ingress:
+  enabled: true
+  className: nginx
+  host: my-java-app.com
+  path: /
+  pathType: Prefix
+  tls:
+    enabled: false
+    secretName: ""
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
