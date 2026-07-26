@@ -56,3 +56,7 @@ reports/
 # Local Minikube state must never be committed
 .minikube/
 .tmp/
+
+# mysql
+helmfile/environments/local/mysql-values.local.yaml
+helmfile/environments/local/java-app-values.local.yaml
